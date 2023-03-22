@@ -10,11 +10,25 @@ function Square({ value, onSquareClick }){
 
 export default function Board(){
 
+  // used to track the state of whose turn it is
+  const [xIsNext, setXIsNext] = useState(true);
+  // sets the array of squares and passes them down as props to the square child
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i){
+    
+    // Return if there is already a value in the square 
+    if(squares[i]){
+      return;
+    }
+    // Create a copy of the initial array to allow for rewindng of turns
     const nextSquares = squares.slice();
-    nextSquares[i] = "X";
+    if(xIsNext){
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O"
+    }
+    setXIsNext(!xIsNext);
     setSquares(nextSquares);
   }
 
